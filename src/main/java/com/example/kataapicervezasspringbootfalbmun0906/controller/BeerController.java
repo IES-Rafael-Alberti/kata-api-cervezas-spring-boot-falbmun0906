@@ -36,18 +36,42 @@ public class BeerController {
     public ResponseEntity<Beer> updateBeer(@PathVariable Long id, @RequestBody Beer beerDetails) {
         return beerRepository.findById(id)
                 .map(beer -> {
-                    beer.setName(beerDetails.getName());
-                    beer.setAbv(beerDetails.getAbv());
-                    beer.setIbu(beerDetails.getIbu());
-                    beer.setSrm(beerDetails.getSrm());
-                    beer.setEbc(beerDetails.getEbc());
-                    beer.setStyle_id(beerDetails.getStyle_id());
-                    beer.setBrewery_id(beerDetails.getBrewery_id());
-                    beer.setCategory_id(beerDetails.getCategory_id());
-                    beer.setDescription(beerDetails.getDescription());
+                    // Actualización parcial: solo actualizar campos que no son null
+                    if (beerDetails.getName() != null) {
+                        beer.setName(beerDetails.getName());
+                    }
+                    if (beerDetails.getAbv() != null) {
+                        beer.setAbv(beerDetails.getAbv());
+                    }
+                    if (beerDetails.getIbu() != null) {
+                        beer.setIbu(beerDetails.getIbu());
+                    }
+                    if (beerDetails.getSrm() != null) {
+                        beer.setSrm(beerDetails.getSrm());
+                    }
+                    if (beerDetails.getEbc() != null) {
+                        beer.setEbc(beerDetails.getEbc());
+                    }
+                    if (beerDetails.getStyle_id() != null) {
+                        beer.setStyle_id(beerDetails.getStyle_id());
+                    }
+                    if (beerDetails.getBrewery_id() != null) {
+                        beer.setBrewery_id(beerDetails.getBrewery_id());
+                    }
+                    if (beerDetails.getCategory_id() != null) {
+                        beer.setCategory_id(beerDetails.getCategory_id());
+                    }
+                    if (beerDetails.getDescription() != null) {
+                        beer.setDescription(beerDetails.getDescription());
+                    }
                     return ResponseEntity.ok(beerRepository.save(beer));
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PatchMapping("/beer/{id}")
+    public ResponseEntity<Beer> partialUpdateBeer(@PathVariable Long id, @RequestBody Beer beerDetails) {
+        return updateBeer(id, beerDetails);
     }
 
     @DeleteMapping("/beer/{id}")

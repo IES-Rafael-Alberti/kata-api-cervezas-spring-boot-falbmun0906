@@ -81,6 +81,9 @@ Respuesta: 200 OK
 
 ### Modificar una cerveza
 
+El endpoint PUT permite tanto actualizaciones totales como parciales. Solo es necesario enviar los campos que se desean modificar, y el resto permanecerán inalterados.
+
+Actualización total:
 ```
 PUT /beer/1
 Content-Type: application/json
@@ -95,6 +98,28 @@ Content-Type: application/json
   "brewery_id": 1,
   "category_id": 1,
   "description": "Actualización de la descripción."
+}
+```
+Respuesta: 200 OK
+
+Actualización parcial (solo modificar el nombre):
+```
+PUT /beer/1
+Content-Type: application/json
+
+{
+  "name": "Pale Ale Mejorada"
+}
+```
+Respuesta: 200 OK
+
+El método PATCH también está disponible y funciona de la misma forma:
+```
+PATCH /beer/1
+Content-Type: application/json
+
+{
+  "abv": 6.0
 }
 ```
 Respuesta: 200 OK
@@ -149,3 +174,60 @@ GET /style/1
 Respuesta: 200 OK
 
 Cada endpoint ha sido probado utilizando herramientas como Postman y curl para verificar su funcionamiento y la correcta gestión de los datos en la base de datos.
+
+## Pruebas automatizadas
+
+He creado una colección de Postman (`cervezas-api.postman_collection.json`) que contiene todos los tests necesarios para verificar el correcto funcionamiento de la API. Esta colección puede ejecutarse de forma automatizada utilizando Newman.
+
+### Instalación de Newman
+
+Para ejecutar los tests desde la línea de comandos, primero instalé Newman globalmente:
+
+```bash
+npm install -g newman
+```
+
+### Ejecución de tests
+
+Para ejecutar todos los tests de la colección:
+
+```bash
+newman run cervezas-api.postman_collection.json
+```
+
+### Generación de reportes HTML
+
+Para generar un reporte HTML profesional con los resultados de los tests, instalé el reporter htmlextra:
+
+```bash
+npm install -g newman-reporter-htmlextra
+```
+
+Y ejecuté los tests con la generación del reporte:
+
+```bash
+newman run cervezas-api.postman_collection.json -r htmlextra --reporter-htmlextra-export test-results.html --reporter-htmlextra-title "API de Cervezas - Resultados de Tests" --reporter-htmlextra-darkTheme
+```
+
+Este comando genera un archivo `test-results.html` con un reporte detallado y visualmente atractivo que incluye:
+
+- Resumen general de la ejecución
+- Estadísticas de tests exitosos/fallidos
+- Detalles de cada petición realizada
+- Tiempos de respuesta
+- Cuerpos de peticiones y respuestas
+- Tema oscuro/claro configurable
+
+Los resultados de los tests muestran que todos los endpoints funcionan correctamente:
+
+- Todas las cervezas: 200 OK
+- Añadir cerveza: 200 OK
+- Consultar cerveza por ID: 200 OK
+- Modificar cerveza: 200 OK
+- Eliminar cerveza: 204 No Content
+- Todas las operaciones de lectura para cerveceras, categorías y estilos: 200 OK
+
+### Evidencias:
+
+En este enlace, se pueden ver las evidencias de la ejecución de los tests y el reporte generado: [Evidencias de Tests](https://example.com/evidencias-tests-api-cervezas)
+

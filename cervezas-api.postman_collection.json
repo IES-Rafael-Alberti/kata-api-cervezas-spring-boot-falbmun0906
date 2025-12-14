@@ -1,0 +1,192 @@
+{
+  "info": {
+    "_postman_id": "c1e6e1b0-0000-0000-0000-cervezasapi002",
+    "name": "Cervezas API - Mejorada",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Colección de pruebas para la API de cervezas con captura dinámica de IDs"
+  },
+  "item": [
+    {
+      "name": "Obtener todas las cervezas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/beers",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["beers"]
+        }
+      }
+    },
+    {
+      "name": "Añadir una cerveza",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 200) {",
+              "    var jsonData = pm.response.json();",
+              "    pm.environment.set('beer_id', jsonData.id);",
+              "    console.log('Beer ID capturado: ' + jsonData.id);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"IPA Test\",\n  \"abv\": 6.5,\n  \"ibu\": 60,\n  \"srm\": 12,\n  \"ebc\": 24,\n  \"style_id\": 2,\n  \"brewery_id\": 1,\n  \"category_id\": 1,\n  \"description\": \"India Pale Ale aromática de prueba.\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/beer",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["beer"]
+        }
+      }
+    },
+    {
+      "name": "Obtener una cerveza por id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/beer/{{beer_id}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["beer", "{{beer_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Modificar una cerveza",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"IPA Actualizada\",\n  \"abv\": 7.0,\n  \"ibu\": 65,\n  \"srm\": 13,\n  \"ebc\": 26,\n  \"style_id\": 2,\n  \"brewery_id\": 1,\n  \"category_id\": 1,\n  \"description\": \"IPA actualizada con mayor amargor.\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/beer/{{beer_id}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["beer", "{{beer_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Eliminar una cerveza",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/beer/{{beer_id}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["beer", "{{beer_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Listar todas las cerveceras",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/breweries",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["breweries"]
+        }
+      }
+    },
+    {
+      "name": "Obtener una cervecera por id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/brewerie/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["brewerie", "1"]
+        }
+      }
+    },
+    {
+      "name": "Listar todas las categorías",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/categories",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["categories"]
+        }
+      }
+    },
+    {
+      "name": "Obtener una categoría por id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/categorie/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["categorie", "1"]
+        }
+      }
+    },
+    {
+      "name": "Listar todos los estilos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/styles",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["styles"]
+        }
+      }
+    },
+    {
+      "name": "Obtener un estilo por id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/style/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["style", "1"]
+        }
+      }
+    }
+  ]
+}
+

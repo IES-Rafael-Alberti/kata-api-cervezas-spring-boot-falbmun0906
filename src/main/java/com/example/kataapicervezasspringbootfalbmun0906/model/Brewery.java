@@ -13,4 +13,6 @@ public class Brewery {
     private String name;
     private String city;
     private String country;
+    @Column(name = "descript")
+    private String description;
 }

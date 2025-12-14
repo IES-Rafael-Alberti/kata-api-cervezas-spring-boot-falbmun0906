@@ -18,5 +18,6 @@ public class Beer {
     private Integer style_id;
     private Integer brewery_id;
     private Integer category_id;
+    @Column(name = "descript")
     private String description;
 }

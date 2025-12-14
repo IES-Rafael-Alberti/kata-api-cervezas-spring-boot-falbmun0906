@@ -10,5 +10,6 @@ public class Style {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "style_name")
     private String name;
 }
